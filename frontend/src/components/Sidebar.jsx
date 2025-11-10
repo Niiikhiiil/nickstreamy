@@ -1,8 +1,31 @@
 import React from 'react'
+import useAuthUser from '../hooks/useAuthUser'
+import { Link, useLocation } from 'react-router'
+import { HomeIcon, ShipWheelIcon } from 'lucide-react'
 
 const Sidebar = () => {
+    const { authUser } = useAuthUser()
+    const location = useLocation()
+    const currentPath = location.pathname
+
     return (
-        <div>Sidebar</div>
+        <aside className='w-64 bg-base-200 border-r border-base-300 hidden lg:flex flex-col h-screen sticky top-0'>
+            <div className='p-4 border-b border-base-300'>
+                <Link to="/" className='flex items-center gap-2.5' >
+                    <ShipWheelIcon className='size-9 text-primary' />
+                    <span className='text-3xl font-bold font-mono bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary tracking-wider'>
+                        Streamify
+                    </span>
+                </Link>
+            </div>
+
+            <nav className='flex-1 p-4 space-y-1'>
+                <Link to="/" className={`btn btn-ghost justify-start w-full gap-3 px-3 normal-case ${currentPath === "/" ? "btn-active" : ""}`}>
+                    <HomeIcon className='size-5 text-base-content opacity-70' />
+                    <span>Home</span>
+                </Link>
+            </nav>
+        </aside>
     )
 }
 
