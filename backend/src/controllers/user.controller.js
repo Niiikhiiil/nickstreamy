@@ -3,13 +3,13 @@ import FriendRequest from "../models/FriendRequest.js";
 
 export const getRecommendedUsers = async (req, res) => {
   try {
-    const currentUserId = req.user._id;
+    const currentUserId = req.user.id;
     const currentUser = req.user;
 
     const recommendedUsers = await User.find({
       $and: [
         { _id: { $ne: currentUserId } }, //exclude current user
-        { $id: { $nin: currentUser.friends } }, //exclude current user's friends
+        { _id: { $nin: currentUser.friends } }, //exclude current user's friends
         { isOnboarded: true }, // properly onboarded
       ],
     });
@@ -23,7 +23,7 @@ export const getRecommendedUsers = async (req, res) => {
 
 export const getMyFriends = async (req, res) => {
   try {
-    const user = await User.findById(req.user._id)
+    const user = await User.findById(req.user.id)
       .select("friends")
       .populate(
         "friends",
@@ -52,17 +52,19 @@ export const sendFriendRequest = async (req, res) => {
     if (!recipient)
       return res.status(400).json({ message: "Recipient not found!" });
 
-    if (recipient.friends.includes(myid))
+    if (recipient.friends.includes(myId))
       return res
         .status(400)
         .json({ message: "You are already friends with this user!" });
 
-    const existingRequest = await FriendRequest.find({
+    const existingRequest = await FriendRequest.findOne({
       $or: [
         { sender: myId, recipient: recipientId },
         { sender: recipientId, recipient: myId },
       ],
     });
+
+    console.log("existingRequest", existingRequest);
 
     if (existingRequest)
       return res.status(400).json({
