@@ -141,7 +141,7 @@ export const getFriendRequests = async (req, res) => {
 
 export const outgoingFriendRequests = async (req, res) => {
   try {
-    const outgoingRequests = await FriendRequest.fing({
+    const outgoingRequests = await FriendRequest.find({
       sender: req.user._id,
       status: "pending",
     }).populate(

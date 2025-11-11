@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Navigate, Route, Routes } from 'react-router'
 import { Toaster } from "react-hot-toast"
 
@@ -12,16 +12,22 @@ import CallPage from './pages/CallPage'
 import SignupPage from './pages/SignupPage'
 import PageLoader from './components/PageLoader'
 import useAuthUser from './hooks/useAuthUser'
+import { useThemeStore } from './store/useThemeStore'
 
 const App = () => {
   const { isLoading, authUser } = useAuthUser();
+  const { theme } = useThemeStore()
   const isAuthenticated = Boolean(authUser);
   const isOnboarded = authUser?.isOnboarded;
+
+  useEffect(() => {
+    document.querySelector("html").setAttribute("data-theme", theme);
+  }, [theme]);
 
   if (isLoading) return <PageLoader />
 
   return (
-    <div className='h-screen' data-theme="forest">
+    <div className='h-screen' >
       <Routes>
         <Route path='/' element={(isAuthenticated && isOnboarded) ? (
           <Layout showSidebar={true}>

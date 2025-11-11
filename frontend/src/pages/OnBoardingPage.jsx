@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import toast, { LoaderIcon } from 'react-hot-toast';
 import { completeOnboarding } from '../lib/api';
 import { CameraIcon, MapPinIcon, ShipWheelIcon, ShuffleIcon } from 'lucide-react';
-import { LANGUAGES } from '../../../backend/src/constants';
+import { LANGUAGES } from '../constants';
 
 const OnBoardingPage = () => {
     const { authUser } = useAuthUser();

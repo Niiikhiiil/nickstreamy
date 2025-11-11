@@ -10,12 +10,42 @@ export const login = async (loginData) => {
   return response?.data;
 };
 
+export const logout = async () => {
+  const response = await axiosInstance.post("/auth/logout");
+  return response?.data;
+};
+
 export const getAuthUser = async () => {
-  const res = await axiosInstance.get("/auth/me");
-  return res.data;
+  try {
+    const res = await axiosInstance.get("/auth/me");
+    return res.data;
+  } catch (error) {
+    console.log("Error in GetAuthUser", error);
+    return null;
+  }
 };
 
 export const completeOnboarding = async (userData) => {
   const res = await axiosInstance.post("/auth/onboarding", userData);
+  return res.data;
+};
+
+export const getUserFriends = async () => {
+  const res = await axiosInstance.get("/users/friends");
+  return res.data;
+};
+
+export const getRecomendedUsers = async () => {
+  const res = await axiosInstance.get("/users");
+  return res.data;
+};
+
+export const getOutgoingFriendReqs = async () => {
+  const res = await axiosInstance.get("/users/outgoing-friend-requests");
+  return res.data;
+};
+
+export const sendFriendRequest = async (userId) => {
+  const res = await axiosInstance.get(`/users/friend-request/${userId}`);
   return res.data;
 };
