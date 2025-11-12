@@ -1,4 +1,5 @@
 import { createRoot } from 'react-dom/client'
+import "stream-chat-react/dist/css/v2/index.css"
 import './index.css'
 import { BrowserRouter } from "react-router"
 import App from './App.jsx'
