@@ -25,7 +25,16 @@ const ChatPage = () => {
         enabled: !!authUser //this will run when authUser is available
     })
 
-    const handleVideoCall = () => { }
+    const handleVideoCall = () => {
+        if (channel) {
+            const callUrl = `${window.location.origin}/call/${channel.id}`;
+            channel.sendMessage({
+                text: `I've started a video call. Join me here: ${callUrl}`,
+            })
+
+            toast.success("Video call link sent in chat message!")
+        }
+    }
 
     // 5:35:38 
 
